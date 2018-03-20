@@ -288,62 +288,11 @@
                 "fileUris": [
                     "[variables('scriptActionUri_entrypoint')]", "[variables('scriptActionUri_nginx')]", "[variables('scriptActionUri_guacamole')]"
                 ],
-                "commandToExecute": "[concat('bash install.sh', ' --fqdn ', reference(variables('publicIPAddressName')).dnsSettings.fqdn, ' --email ', variables('certEmailAddress'), ' --mysqlpwd ', variables('mysqlRootPwd'), ' --guacpwd ', variables('guacDBPwd'))]"
+                "commandToExecute": "[concat('bash install.sh', ' --fqdn ', reference(variables('publicIPAddressName')).dnsSettings.fqdn, ' --email ', variables('certEmailAddress'), ' --mysqlpwd ', base64(variables('mysqlRootPwd')), ' --guacpwd ', base64(variables('guacDBPwd')))]"
               }
             }
         }
 
-    ],
-
-    "outputs" : {
-        "vmName" : {
-            "type" : "string",
-            "value" : "[variables('vmName')]"
-        },
-        "vmFQDN" : {
-            "type" : "string",
-            "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
-        },                                                                
-        "vmSize" : {
-            "type" : "string",
-            "value": "[variables('vmSize')]"
-        },
-        "vmUsername" : {
-            "type" : "string",
-            "value": "[variables('vmUsername')]"
-        },
-        "vmSSHPublicKey" : {
-            "type" : "string",
-            "value": "[variables('vmSSHPublicKey')]"
-        },
-        "vmVnetName" : {
-            "type" : "string",
-            "value": "[variables('vmVnetName')]"
-        },
-        "vmVnetRG" : {
-            "type" : "string",
-            "value": "[variables('vmVnetRG')]"
-        },
-        "vmSubnetName" : {
-            "type" : "string",
-            "value": "[variables('vmSubnetName')]"
-        },
-        "mysqlRootPwd" : {
-            "type" : "string",
-            "value": "[variables('mysqlRootPwd')]"
-        },
-        "guacDBPwd" : {
-            "type" : "string",
-            "value": "[variables('guacDBPwd')]"
-        },
-        "scriptActionUri_nginx" : {
-            "type" : "string",
-            "value": "[variables('scriptActionUri_nginx')]"
-        },
-        "scriptActionUri_guacamole" : {
-            "type" : "string",
-            "value": "[variables('scriptActionUri_guacamole')]"
-        }        
-    }
+    ]
 
 }
