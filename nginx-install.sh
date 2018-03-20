@@ -82,4 +82,4 @@ systemctl restart nginx
 apt-get install python-certbot-nginx -y
 
 # Generate and Install a Let's Encrypt SSL certificate into Nginx
-certbot --nginx -n -d $certbotfqdn --email $certbotemail --agree-tos --redirect --hsts  
+certbot --nginx -n -d $certbotfqdn --email $certbotemail --agree-tos --redirect --hsts   
