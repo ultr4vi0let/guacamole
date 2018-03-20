@@ -21,8 +21,12 @@ while [ "$1" != "" ]; do
 done
 
 if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ] && [ -n "$argfqdn" ] && [ -n "$argemail" ]; then
-        mysqlrootpassword=$argmysqlpwd
-        guacdbuserpassword=$argguacpwd
+        mysqlrootpassword=$(printf '%q\n' $argmysqlpwd | base64 -d <<< $argmysqlpwd) # decode base64 string
+        mysqlrootpassword=$(printf '%q' $mysqlrootpassword)                          # escape special characters
+
+        guacdbuserpassword=$(printf '%q\n' $argguacpwd | base64 -d <<< $argguacpwd)  # decode base64 string
+        guacdbuserpassword=$(printf '%q'$guacdbuserpassword)                         # escape special characters
+
         certbotfqdn=$argfqdn
         certbotemail=$argemail
 else
