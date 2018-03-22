@@ -6,10 +6,10 @@
 while [ "$1" != "" ]; do
     case $1 in
         -m | --mysqlpwd )       shift
-                                argmysqlpwd="$1"
+                                argmysqlpwd="$1" # base64 encoded, MySQL root password
                                 ;;
         -g | --guacpwd )        shift
-                                argguacpwd="$1"
+                                argguacpwd="$1"  # base64 encoded, Guacamole_user database password
                                 ;;
         -f | --fqdn )           shift
                                 argfqdn="$1"
@@ -21,12 +21,8 @@ while [ "$1" != "" ]; do
 done
 
 if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ] && [ -n "$argfqdn" ] && [ -n "$argemail" ]; then
-        mysqlrootpassword=$(printf '%q\n' $argmysqlpwd | base64 -d <<< $argmysqlpwd) # decode base64 string
-        mysqlrootpassword=$(printf '%q' $mysqlrootpassword)                          # escape special characters
-
-        guacdbuserpassword=$(printf '%q\n' $argguacpwd | base64 -d <<< $argguacpwd)  # decode base64 string
-        guacdbuserpassword=$(printf '%q'$guacdbuserpassword)                         # escape special characters
-
+        mysqlrootpassword=$argmysqlpwd
+        guacdbuserpassword=$argguacpwd
         certbotfqdn=$argfqdn
         certbotemail=$argemail
 else
@@ -34,5 +30,5 @@ else
   exit 1
 fi
 
-./nginx-install.sh --fqdn $certbotfqdn --email $certbotemail
-./guac-install.sh --mysqlpwd $mysqlrootpassword --guacpwd $guacdbuserpassword
+./nginx-install.sh --fqdn $certbotfqdn --email $certbotemail                   # Install Nginx
+./guac-install.sh --mysqlpwd $mysqlrootpassword --guacpwd $guacdbuserpassword  # Install Guacamole

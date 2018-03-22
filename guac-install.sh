@@ -20,11 +20,11 @@ done
 
 # Get MySQL root password and Guacamole User password
 if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ]; then
-        mysqlrootpassword=$(printf '%q\n' $argmysqlpwd | base64 -d <<< $argmysqlpwd) # decode base64 string
-        mysqlrootpassword=$(printf '%q' $mysqlrootpassword)                          # escape special characters
+        mysqlrootpassword=$(echo $argmysqlpwd | base64 -d)                                                 # decode base64 string
+        mysqlrootpassword=$(printf "'%s'\n" "$(printf '%s' "$mysqlrootpassword" | sed "s/'/'\\\\''/g")")   # escape special characters
 
-        guacdbuserpassword=$(printf '%q\n' $argguacpwd | base64 -d <<< $argguacpwd)  # decode base64 string
-        guacdbuserpassword=$(printf '%q'$guacdbuserpassword)                         # escape special characters
+        guacdbuserpassword=$(echo $argguacpwd | base64 -d)                                                 # decode base64 string
+        guacdbuserpassword=$(printf "'%s'\n" "$(printf '%s' "$guacdbuserpassword" | sed "s/'/'\\\\''/g")") # escape special characters
 else
     echo 
     while true
