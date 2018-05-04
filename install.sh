@@ -31,4 +31,4 @@ else
 fi
 
 ./nginx-install.sh --fqdn $certbotfqdn --email $certbotemail                   # Install Nginx
-#./guac-install.sh --mysqlpwd $mysqlrootpassword --guacpwd $guacdbuserpassword  # Install Guacamole
+./guac-install.sh --mysqlpwd $mysqlrootpassword --guacpwd $guacdbuserpassword  # Install Guacamole
