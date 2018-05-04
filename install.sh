@@ -30,5 +30,5 @@ else
   exit 1
 fi
 
-./nginx-install.sh --fqdn $certbotfqdn --email $certbotemail                   # Install Nginx
+#./nginx-install.sh --fqdn $certbotfqdn --email $certbotemail                   # Install Nginx
 ./guac-install.sh --mysqlpwd $mysqlrootpassword --guacpwd $guacdbuserpassword  # Install Guacamole
