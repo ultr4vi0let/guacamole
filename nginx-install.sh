@@ -9,17 +9,18 @@ apt-get update
 # Upgrade existing packages
 apt-get upgrade -y
 
-# Install Nginx
+# Install nginx
 sudo apt-get install nginx -y
 
 # Get script arguments for non-interactive mode
 while [ "$1" != "" ]; do
     case $1 in
-        -f | --fqdn )       shift
-                            argfqdn="$1"
-                            ;;
-        -e | --email )      shift
-                            argemail="$1"
+        -f | --fqdn )              shift
+                                   argfqdn="$1";;
+        -e | --email )             shift
+                                   argemail="$1";;
+        -g | --guacamole )         shift
+                                   argguacamole="$1"
     esac
     shift
 done
@@ -54,6 +55,13 @@ else
     echo
 fi
 
+# Get guacamole url
+if [ -n "$argguacamole" ]; then
+        guacamoleurl=$argguacamole
+else
+        guacamoleurl=http://localhost:8080/guacamole/
+fi
+
 # Configure /etc/nginx/sites-available/default
 echo "server {" > /etc/nginx/sites-available/default
 echo " " >> /etc/nginx/sites-available/default
@@ -63,7 +71,7 @@ echo "    root /var/www/html;" >> /etc/nginx/sites-available/default
 echo "    index index.html index.htm index.nginx-debian.html;" >> /etc/nginx/sites-available/default
 echo "    server_name $certbotfqdn;" >> /etc/nginx/sites-available/default
 echo "    location / {" >> /etc/nginx/sites-available/default
-echo "        proxy_pass http://localhost:8080/guacamole/;" >> /etc/nginx/sites-available/default
+echo "        proxy_pass $guacamoleurl;" >> /etc/nginx/sites-available/default
 echo "        proxy_buffering off;" >> /etc/nginx/sites-available/default
 echo "        proxy_http_version 1.1;" >> /etc/nginx/sites-available/default
 echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/sites-available/default
