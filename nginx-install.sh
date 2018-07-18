@@ -77,7 +77,6 @@ echo "        proxy_http_version 1.1;" >> /etc/nginx/sites-available/default
 echo "        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;" >> /etc/nginx/sites-available/default
 echo "        proxy_set_header Upgrade \$http_upgrade;" >> /etc/nginx/sites-available/default
 echo "        proxy_set_header Connection \$http_connection;" >> /etc/nginx/sites-available/default
-echo "        proxy_cookie_path /guacamole/ /new-path/;" >> /etc/nginx/sites-available/default
 echo "        access_log off;" >> /etc/nginx/sites-available/default
 echo "    }" >> /etc/nginx/sites-available/default
 echo " " >> /etc/nginx/sites-available/default
