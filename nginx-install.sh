@@ -3,14 +3,14 @@
 # Add certbot repository
 add-apt-repository ppa:certbot/certbot -y
 
-# Update package lists for the newly added repository
+# Update package lists
 apt-get update
 
 # Upgrade existing packages
 apt-get upgrade -y
 
 # Install nginx
-sudo apt-get install nginx -y
+apt-get install nginx -y
 
 # Get script arguments for non-interactive mode
 while [ "$1" != "" ]; do
