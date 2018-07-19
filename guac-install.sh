@@ -3,8 +3,11 @@
 # Version numbers of Guacamole and MySQL Connector/J to download
 GUACVERSION="0.9.14"
 
-# Update apt so we can search apt-cache for newest tomcat version supported
-apt update
+# Update package lists
+apt-get update
+
+# Upgrade existing packages
+apt-get upgrade -y
 
 # Get script arguments for non-interactive mode
 while [ "$1" != "" ]; do
@@ -90,10 +93,10 @@ fi
 #TOMCAT=""
 
 # Install features
-apt -y install build-essential libcairo2-dev ${JPEGTURBO} ${LIBPNG} libossp-uuid-dev libavcodec-dev libavutil-dev \
+apt-get install build-essential libcairo2-dev ${JPEGTURBO} ${LIBPNG} libossp-uuid-dev libavcodec-dev libavutil-dev \
 libswscale-dev libfreerdp-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev \
 libvorbis-dev libwebp-dev mysql-server mysql-client mysql-common mysql-utilities libmysql-java ${TOMCAT} freerdp-x11 \
-ghostscript wget dpkg-dev
+ghostscript wget dpkg-dev -y
 
 # If apt fails to run completely the rest of this isn't going to work...
 if [ $? -ne 0 ]; then
