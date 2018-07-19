@@ -23,8 +23,8 @@ done
 
 # Get MySQL root password and Guacamole User password
 if [ -n "$argmysqlpwd" ] && [ -n "$argguacpwd" ]; then
-        mysqlrootpassword=$(echo $argmysqlpwd | base64 -d)                                                 # decode base64 string
-        guacdbuserpassword=$(echo $argguacpwd | base64 -d)                                                 # decode base64 string
+        mysqlrootpassword=$argmysqlpwd
+        guacdbuserpassword=$argguacpwd
 else
     echo 
     while true
@@ -51,8 +51,9 @@ else
     echo
 fi
 
-debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password password $mysqlrootpassword"
-debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password_again password $mysqlrootpassword"
+export DEBIAN_FRONTEND=noninteractive
+echo mysql-server mysql-server/root_password password $mysqlrootpassword | debconf-set-selections
+echo mysql-server mysql-server/root_password_again password $mysqlrootpassword | debconf-set-selections
 
 # Ubuntu and Debian have different package names for libjpeg
 # Ubuntu and Debian versions have differnet package names for libpng-dev
@@ -93,7 +94,7 @@ fi
 #TOMCAT=""
 
 # Install Mysql
-apt-get install mysql-server-5.7 mysql-client mysql-common mysql-utilities -y
+apt-get install mysql-server mysql-client mysql-common mysql-utilities -y
 
 # Install Guacamole
 apt-get install build-essential libcairo2-dev ${JPEGTURBO} ${LIBPNG} libossp-uuid-dev libavcodec-dev libavutil-dev \
