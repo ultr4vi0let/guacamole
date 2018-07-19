@@ -51,8 +51,8 @@ else
     echo
 fi
 
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $mysqlrootpassword"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $mysqlrootpassword"
+debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password password $mysqlrootpassword"
+debconf-set-selections <<< "mysql-server-5.7 mysql-server/root_password_again password $mysqlrootpassword"
 
 # Ubuntu and Debian have different package names for libjpeg
 # Ubuntu and Debian versions have differnet package names for libpng-dev
@@ -92,17 +92,14 @@ fi
 # Uncomment to manually force a tomcat version
 #TOMCAT=""
 
-# Install features
+# Install Mysql
+apt-get install mysql-server-5.7 mysql-client mysql-common mysql-utilities -y
+
+# Install Guacamole
 apt-get install build-essential libcairo2-dev ${JPEGTURBO} ${LIBPNG} libossp-uuid-dev libavcodec-dev libavutil-dev \
 libswscale-dev libfreerdp-dev libpango1.0-dev libssh2-1-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev \
-libvorbis-dev libwebp-dev mysql-server mysql-client mysql-common mysql-utilities libmysql-java ${TOMCAT} freerdp-x11 \
+libvorbis-dev libwebp-dev libmysql-java ${TOMCAT} freerdp-x11 \
 ghostscript wget dpkg-dev -y
-
-# If apt fails to run completely the rest of this isn't going to work...
-if [ $? -ne 0 ]; then
-    echo "apt failed to install all required dependencies"
-    exit
-fi
 
 # Set SERVER to be the preferred download server from the Apache CDN
 SERVER="http://apache.org/dyn/closer.cgi?action=download&filename=guacamole/${GUACVERSION}"
