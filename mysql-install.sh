@@ -1,5 +1,7 @@
 #!/bin/bash
 
+dbpass="mySQLPassw0rd"
+
 # Update package lists
 apt-get update
 
@@ -21,8 +23,8 @@ else
 fi
 
 # Install Mysql
-
-debconf-set-selections <<< "mysql-server mysql-server/root_password password $mysqlrootpwd"
-debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $mysqlrootpwd"
+export DEBIAN_FRONTEND=noninteractive
+debconf-set-selections <<< "mysql-server mysql-server/root_password password $dbpass"
+debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $dbpass"
 
 apt-get install mysql-server mysql-client mysql-common mysql-utilities -y
