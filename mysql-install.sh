@@ -14,7 +14,7 @@ done
 
 # Get MySQL root password
 if [ -n "$arg_mysqlrootpwd" ]; then
-        mysqlrootpwd=$(echo $arg_mysqlrootpwd | base64 -d)
+        mysqlrootpwd=$arg_mysqlrootpwd
 else
     echo "Please specify the mysql root password using the parameter -m or --mysqlrootpwd"
     exit 1
